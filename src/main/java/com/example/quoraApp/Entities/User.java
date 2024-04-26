@@ -12,6 +12,7 @@ import lombok.Setter;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -30,24 +31,28 @@ public class User extends Base{
     @Column
     private String bio;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Question> question;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Answer> answers;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Like> likes;
 
-    @OneToMany(mappedBy = "follower")
+    @OneToMany(mappedBy="to",cascade = CascadeType.ALL)
     @JsonManagedReference
-    private Set<Follow> followers;
+    private List<Follow> followers;
 
-    @OneToMany(mappedBy = "followee")
+    @OneToMany(mappedBy="from",cascade = CascadeType.ALL)
     @JsonManagedReference
-    private Set<Follow> followees;
+    private List<Follow> following;
+
+    @OneToMany(mappedBy = "comment_user",cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Comment> comments;
 
 }

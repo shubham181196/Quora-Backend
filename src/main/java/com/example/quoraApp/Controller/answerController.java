@@ -49,5 +49,10 @@ public class answerController {
         return ResponseEntity.ok(answerservice.getAllAnswer(userId));
     }
 
+    @DeleteMapping("/answers/{answerId}")
+    public ResponseEntity<?> deleteAnswerById(@PathVariable UUID answerId){
+        return ResponseEntity.ok(answerservice.deleteAnswer(answerId));
+    }
+
 
 }

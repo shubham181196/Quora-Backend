@@ -1,5 +1,7 @@
 package com.example.quoraApp.Entities;
 
+
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,20 +9,29 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "follow")
-public class Follow extends Base {
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "follower_id")
-    @JsonBackReference
-    private User follower;
+@Table(name = "follows")
+public class Follow {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "followee_id")
+    @ManyToOne
+    @JoinColumn(name="from_user_fk")
     @JsonBackReference
-    private User followee;
+    private User from;
+
+    @ManyToOne
+    @JoinColumn(name="to_user_fk")
+    @JsonBackReference
+    private User to;
+
 }
+

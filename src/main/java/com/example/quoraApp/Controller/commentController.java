@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -29,5 +30,11 @@ public class commentController {
         Comment comment=  commentservice.saveComment(commentId,requestDTO);
         if(comment!=null) return ResponseEntity.ok(comment);
         return ResponseEntity.status(400).body(new ErrorHandler(400,"Bad Request"));
+    }
+
+    @GetMapping("/comments/{answerId}/answer")
+    public ResponseEntity<List<?>> getAllCommentsOnAnswer(@PathVariable UUID answerId){
+        List<Comment> comment=  commentservice.getCommentsByAnswerId(answerId);
+        return ResponseEntity.ok(comment);
     }
 }

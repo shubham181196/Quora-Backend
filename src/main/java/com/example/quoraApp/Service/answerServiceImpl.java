@@ -73,4 +73,15 @@ public class answerServiceImpl implements answerService{
 
     }
 
+    @Override
+    public String deleteAnswer(UUID answerId) {
+        Optional<Answer> answer=answerRepo.findById(answerId);
+        if(answer.isPresent()){
+            answerRepo.deleteById(answerId);
+            return  "answer deleted succesfullly";
+
+        }
+        return "incorrect asnwer id";
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.example.quoraApp.Controller;
 
 import com.example.quoraApp.DTOS.UserUpdateDTO;
+import com.example.quoraApp.Entities.Follow;
 import com.example.quoraApp.Entities.User;
 import com.example.quoraApp.ErrorHandlers.ErrorHandler;
 import com.example.quoraApp.Service.userService;
@@ -27,8 +28,13 @@ public class userController {
             return userservice.getUserById(userId);
     }
 
+    @DeleteMapping("/users/{userId}")
+    public String deleteUser(@PathVariable UUID userId){
+        return userservice.deleteUserById(userId);
+    }
+
     @PostMapping("/users")
-    public ResponseEntity<User> saveUser(@RequestBody User userRequestBody){
+    public ResponseEntity<User> saveUser(@RequestBody UserUpdateDTO userRequestBody){
         return ResponseEntity.status(201).body(userservice.saveUser(userRequestBody));
     }
     @GetMapping("/users")
@@ -44,5 +50,8 @@ public class userController {
         }
         return ResponseEntity.status(404).body(new ErrorHandler(404,"User not found"));
     }
-
+    @GetMapping("/users/{userId}/followers")
+    public List<User> getAllFollowers(@PathVariable UUID userId){
+        return userservice.getAllFollowers(userId);
+    }
 }

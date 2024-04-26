@@ -1,5 +1,7 @@
 package com.example.quoraApp.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,8 +24,11 @@ public class Comment extends Base {
     @Column(name = "parent_id",nullable = false)
     private UUID parentId;
 
-    @Column(name = "user_id",nullable = false)
-    private UUID userId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private User comment_user;
 
     // Constructors, getters, setters...
 }

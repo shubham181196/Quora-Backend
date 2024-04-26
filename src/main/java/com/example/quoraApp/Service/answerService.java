@@ -12,4 +12,5 @@ public interface answerService {
     Answer saveAnswer(RequestDTO requestBody, UUID questionId);
     Answer updateAnswer(String text,UUID answerId);
     List<Answer> getAllAnswer(UUID userId);
+    String deleteAnswer(UUID answerId);
 }
