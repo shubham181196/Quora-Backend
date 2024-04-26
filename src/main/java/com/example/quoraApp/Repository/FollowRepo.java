@@ -12,8 +12,8 @@ import java.util.UUID;
 
 @Repository
 public interface FollowRepo extends JpaRepository<Follow, UUID> {
-//    @Query("SELECT f.follower FROM Follow f WHERE f.follower = :followerId")
-//    List<UUID> findByFollowerId(UUID followerId);
+    @Query("SELECT f.follower FROM Follow f WHERE f.follower = :followerId")
+    List<UUID> findByFollowerId(UUID followerId);
 
 
 }
