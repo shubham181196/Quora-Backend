@@ -1,18 +1,21 @@
 package com.example.quoraApp.Service;
 
+import com.example.CentralRepository.models.Question;
+import com.example.CentralRepository.models.Topic;
+import com.example.CentralRepository.models.Users;
 import com.example.quoraApp.DTOS.QuestionDTO;
-import com.example.quoraApp.Entities.Question;
-import com.example.quoraApp.Entities.Topic;
-import com.example.quoraApp.Entities.User;
+import com.example.quoraApp.DTOS.QuestionListDTO;
 import com.example.quoraApp.Repository.QuestionRepo;
 import com.example.quoraApp.Repository.TopicRepo;
 import com.example.quoraApp.Repository.UserRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
+@Slf4j
 @Service
 @Transactional
 public class questionServiceImpl implements questionService{
@@ -29,7 +32,9 @@ public class questionServiceImpl implements questionService{
     @Override
     public Question saveQuestion(QuestionDTO questionDTO) {
 
-        Optional<User> user = userRepo.findById(questionDTO.getUserId());
+        // We are already verifying this form auth service
+        Optional<Users> user = userRepo.findById(questionDTO.getUserId());
+
         if (!user.isPresent()) return null;
         Set<Topic> topics = null;
         if (questionDTO.getTopics() != null) {
@@ -37,6 +42,7 @@ public class questionServiceImpl implements questionService{
             for (String topicName : questionDTO.getTopics()) {
                 Topic topic = topicRepo.findByName(topicName);
                 if (topic == null) {
+                    System.out.println(topicName);
                     topic = new Topic(topicName);
                     topic = topicRepo.save(topic);
                 }
@@ -44,6 +50,7 @@ public class questionServiceImpl implements questionService{
             }
 
         }
+
         Question question = new Question();
         question.setUser(user.get());
         question.setTitle(questionDTO.getTitle());
@@ -55,9 +62,15 @@ public class questionServiceImpl implements questionService{
     }
 
     @Override
+    public List<QuestionListDTO> findQuestions(UUID userId) {
+        return questionRepo.findAllQuestionList(userId);
+    }
+
+
+    @Override
     public List<Question> findAllQuestionByUserId(UUID userId) {
-        Optional<User> user=userRepo.findById(userId);
-        return user.map(value -> questionRepo.findByUser(value)).orElse(null);
+
+        return questionRepo.findByUser(userId);
     }
 
     @Override

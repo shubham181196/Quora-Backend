@@ -1,6 +1,6 @@
 package com.example.quoraApp.Service;
 
-import com.example.quoraApp.Entities.Topic;
+import com.example.CentralRepository.models.Topic;
 import com.example.quoraApp.Repository.TopicRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

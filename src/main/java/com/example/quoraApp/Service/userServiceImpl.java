@@ -1,8 +1,7 @@
 package com.example.quoraApp.Service;
 
+import com.example.CentralRepository.models.Users;
 import com.example.quoraApp.DTOS.UserUpdateDTO;
-import com.example.quoraApp.Entities.Follow;
-import com.example.quoraApp.Entities.User;
 import com.example.quoraApp.Repository.FollowRepo;
 import com.example.quoraApp.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +28,8 @@ public class userServiceImpl implements userService {
         this.followRepo=followRepo;
     }
 
-    public Optional<User> getUserById(UUID id) {
-        Optional<User>user= userRepository.findById(id);
+    public Optional<Users> getUserById(UUID id) {
+        Optional<Users>user= userRepository.findById(id);
         if(user.isPresent()){
             return user;
         }
@@ -38,8 +37,8 @@ public class userServiceImpl implements userService {
     }
 
     @Override
-    public User saveUser(UserUpdateDTO user) {
-        User user1=new User();
+    public Users saveUser(UserUpdateDTO user) {
+        Users user1=new Users();
         user1.setUserName(user.getUserName());
         user1.setEmailId(user.getEmailId());
         if(user.getBio()!=null) user1.setBio(user.getBio());
@@ -47,8 +46,8 @@ public class userServiceImpl implements userService {
     }
 
     @Override
-    public User updateUser(User user, UUID id) {
-        Optional<User> user1 = userRepository.findById(id);
+    public Users updateUser(Users user, UUID id) {
+        Optional<Users> user1 = userRepository.findById(id);
         if (user1.isPresent()) {
             user.setId(id);
             return userRepository.save(user);
@@ -57,15 +56,15 @@ public class userServiceImpl implements userService {
     }
 
     @Override
-    public List<User> getAllUser() {
+    public List<Users> getAllUser() {
         return userRepository.findAll();
     }
 
     @Override
-    public User updateUser(UserUpdateDTO userDTO,UUID userId) {
-        Optional<User> user=userRepository.findById(userId);
+    public Users updateUser(UserUpdateDTO userDTO,UUID userId) {
+        Optional<Users> user=userRepository.findById(userId);
         if(user.isPresent()){
-            User user1=user.get();
+            Users user1=user.get();
             System.out.println(user1);
             if(userDTO.getUserName()!=null){
                 user1.setUserName(userDTO.getUserName());
@@ -82,7 +81,7 @@ public class userServiceImpl implements userService {
     }
 
     @Override
-    public List<User> getAllFollowers(UUID userId) {
+    public List<Users> getAllFollowers(UUID userId) {
         return null;
 //        List<UUID>follows= followRepo.findByFollowerId(userId);
 //        List<User> users = userRepository.findUsersByUserIds(follows);
@@ -93,7 +92,7 @@ public class userServiceImpl implements userService {
 
     @Override
     public String deleteUserById(UUID id) {
-        Optional<User>user=userRepository.findById(id);
+        Optional<Users>user=userRepository.findById(id);
        if(user.isPresent()){
            userRepository.deleteById(id);
            return "user deleted successfully";

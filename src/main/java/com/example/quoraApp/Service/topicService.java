@@ -1,6 +1,7 @@
 package com.example.quoraApp.Service;
 
-import com.example.quoraApp.Entities.Topic;
+import com.example.CentralRepository.models.Topic;
+
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
 package com.example.quoraApp.Service;
 
+import com.example.CentralRepository.models.Answer;
+import com.example.CentralRepository.models.Question;
+import com.example.CentralRepository.models.Users;
 import com.example.quoraApp.DTOS.RequestDTO;
-import com.example.quoraApp.Entities.Answer;
-import com.example.quoraApp.Entities.Question;
-import com.example.quoraApp.Entities.User;
 import com.example.quoraApp.Repository.AnswerRepo;
 import com.example.quoraApp.Repository.QuestionRepo;
 import com.example.quoraApp.Repository.UserRepo;
@@ -34,7 +34,7 @@ public class answerServiceImpl implements answerService{
         }
 
         // Find the user by their ID
-        Optional<User> userOptional = userRepo.findById(requestDTO.getUserId());
+        Optional<Users> userOptional = userRepo.findById(requestDTO.getUserId());
         if (userOptional.isEmpty()) {
             // Handle the case when the user is not found
             throw new RuntimeException("User not found with ID: " + requestDTO.getUserId());

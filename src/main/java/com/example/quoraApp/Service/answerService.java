@@ -1,7 +1,7 @@
 package com.example.quoraApp.Service;
 
+import com.example.CentralRepository.models.Answer;
 import com.example.quoraApp.DTOS.RequestDTO;
-import com.example.quoraApp.Entities.Answer;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

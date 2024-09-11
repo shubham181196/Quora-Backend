@@ -1,7 +1,7 @@
 package com.example.quoraApp.Controller;
 
+import com.example.CentralRepository.models.Comment;
 import com.example.quoraApp.DTOS.RequestDTO;
-import com.example.quoraApp.Entities.Comment;
 import com.example.quoraApp.ErrorHandlers.ErrorHandler;
 import com.example.quoraApp.Service.commentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1")
 public class commentController {
-    private commentService commentservice;
+    private final commentService commentservice;
     @Autowired
     public commentController(commentService commentservice){
         this.commentservice=commentservice;

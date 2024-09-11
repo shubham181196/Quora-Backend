@@ -1,6 +1,6 @@
 package com.example.quoraApp.Controller;
 
-import com.example.quoraApp.Entities.Topic;
+import com.example.CentralRepository.models.Topic;
 import com.example.quoraApp.Service.topicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +11,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1")
 public class topicController {
-    private topicService topicservice;
-    @Autowired
+    private final topicService topicservice;
+
     public topicController(topicService topicservice){
         this.topicservice=topicservice;
     }

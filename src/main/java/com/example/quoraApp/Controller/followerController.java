@@ -1,7 +1,7 @@
 package com.example.quoraApp.Controller;
 
 
-import com.example.quoraApp.Entities.Follow;
+
 import com.example.quoraApp.Service.followService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

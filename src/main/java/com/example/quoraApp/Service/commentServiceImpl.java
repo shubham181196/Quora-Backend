@@ -1,9 +1,10 @@
 package com.example.quoraApp.Service;
 
+import com.example.CentralRepository.models.Answer;
+import com.example.CentralRepository.models.Comment;
+import com.example.CentralRepository.models.Users;
 import com.example.quoraApp.DTOS.RequestDTO;
-import com.example.quoraApp.Entities.Answer;
-import com.example.quoraApp.Entities.Comment;
-import com.example.quoraApp.Entities.User;
+
 import com.example.quoraApp.Repository.AnswerRepo;
 import com.example.quoraApp.Repository.CommentRepo;
 import com.example.quoraApp.Repository.UserRepo;
@@ -28,7 +29,7 @@ public class commentServiceImpl implements commentService{
     @Override
     public Comment saveCommentAnswer(UUID answerId, RequestDTO requestDTO) {
         Optional<Answer> answer1=answerRepo.findById(answerId);
-        Optional<User> user1=userRepo.findById(requestDTO.getUserId());
+        Optional<Users> user1=userRepo.findById(requestDTO.getUserId());
         if((requestDTO.getText()!=null || requestDTO.getUserId()!=null )&&(answer1.isPresent())){
 
             Comment comment=new Comment(requestDTO.getText(),answerId,user1.get());
@@ -41,7 +42,7 @@ public class commentServiceImpl implements commentService{
     @Override
     public Comment saveComment(UUID commentId, RequestDTO requestDTO) {
         Optional<Comment> comment1=commentRepo.findById(commentId);
-        Optional<User> user1=userRepo.findById(requestDTO.getUserId());
+        Optional<Users> user1=userRepo.findById(requestDTO.getUserId());
         if((requestDTO.getText()!=null || requestDTO.getUserId()!=null )&&(comment1.isPresent())){
             Comment comment=new Comment(requestDTO.getText(),commentId,user1.get());
             return commentRepo.save(comment);

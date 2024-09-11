@@ -1,9 +1,11 @@
 package com.example.quoraApp.Controller;
 
+import com.example.CentralRepository.models.Answer;
 import com.example.quoraApp.DTOS.RequestDTO;
-import com.example.quoraApp.Entities.Answer;
 import com.example.quoraApp.ErrorHandlers.ErrorHandler;
 import com.example.quoraApp.Service.answerService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,14 +16,14 @@ import java.util.UUID;
 @RequestMapping("/api/v1")
 public class answerController {
 
-    private answerService answerservice;
+    private final answerService answerservice;
     @Autowired
     public answerController(answerService answerservice){
         this.answerservice=answerservice;
     }
 
     @PostMapping("/questions/{questionId}/answers")
-    public ResponseEntity<?> saveAnswer(@RequestBody RequestDTO requestbody, @PathVariable UUID questionId){
+    public ResponseEntity<?> saveAnswer(@RequestBody RequestDTO requestbody, @PathVariable UUID questionId, HttpServletRequest request, HttpServletResponse response){
 
         if(requestbody.getUserId()==null && requestbody.getText()==null){
             return ResponseEntity.status(400).body(new ErrorHandler(400,"Bad request.userId and text missing"));
@@ -30,6 +32,9 @@ public class answerController {
         }else if(requestbody.getUserId()==null ){
             return ResponseEntity.status(400).body(new ErrorHandler(400,"Bad request.userId and text missing"));
         }
+
+
+
         Answer answer=answerservice.saveAnswer(requestbody,questionId);
 
         if(answer!=null) {
