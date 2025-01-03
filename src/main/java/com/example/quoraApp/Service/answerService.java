@@ -1,6 +1,7 @@
 package com.example.quoraApp.Service;
 
 import com.example.CentralRepository.models.Answer;
+import com.example.quoraApp.DTOS.AnswerDTO;
 import com.example.quoraApp.DTOS.RequestDTO;
 import org.springframework.stereotype.Service;
 
@@ -13,4 +14,5 @@ public interface answerService {
     Answer updateAnswer(String text,UUID answerId);
     List<Answer> getAllAnswer(UUID userId);
     String deleteAnswer(UUID answerId);
+    List<AnswerDTO>getAnswersByQuestionId(UUID questionId);
 }

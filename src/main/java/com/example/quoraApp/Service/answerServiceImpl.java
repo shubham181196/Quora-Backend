@@ -3,6 +3,7 @@ package com.example.quoraApp.Service;
 import com.example.CentralRepository.models.Answer;
 import com.example.CentralRepository.models.Question;
 import com.example.CentralRepository.models.Users;
+import com.example.quoraApp.DTOS.AnswerDTO;
 import com.example.quoraApp.DTOS.RequestDTO;
 import com.example.quoraApp.Repository.AnswerRepo;
 import com.example.quoraApp.Repository.QuestionRepo;
@@ -82,6 +83,11 @@ public class answerServiceImpl implements answerService{
 
         }
         return "incorrect asnwer id";
+    }
+
+    @Override
+    public List<AnswerDTO> getAnswersByQuestionId(UUID questionId) {
+        return answerRepo.getAnswersByQuestionId(questionId);
     }
 
 }

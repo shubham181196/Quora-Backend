@@ -1,8 +1,10 @@
 package com.example.quoraApp.Service;
 
+import com.example.CentralRepository.models.Answer;
 import com.example.CentralRepository.models.Question;
 import com.example.CentralRepository.models.Topic;
 import com.example.CentralRepository.models.Users;
+import com.example.quoraApp.DTOS.AnswerDTO;
 import com.example.quoraApp.DTOS.QuestionDTO;
 import com.example.quoraApp.DTOS.QuestionListDTO;
 import com.example.quoraApp.Repository.QuestionRepo;
@@ -22,11 +24,13 @@ public class questionServiceImpl implements questionService{
     private QuestionRepo questionRepo;
     private TopicRepo topicRepo;
     private UserRepo userRepo;
+    private final answerService answerservice;
     @Autowired
-    public questionServiceImpl(QuestionRepo questionRepo,UserRepo userRepo,TopicRepo topicRepo){
+    public questionServiceImpl(QuestionRepo questionRepo,UserRepo userRepo,TopicRepo topicRepo,answerService answerservice){
         this.questionRepo=questionRepo;
         this.userRepo=userRepo;
         this.topicRepo=topicRepo;
+        this.answerservice=answerservice;
     }
 
     @Override
@@ -63,7 +67,12 @@ public class questionServiceImpl implements questionService{
 
     @Override
     public List<QuestionListDTO> findQuestions(UUID userId) {
-        return questionRepo.findAllQuestionList(userId);
+        List<QuestionListDTO>questiondtos=questionRepo.findAllQuestionList(userId);
+        for(QuestionListDTO question:questiondtos){
+            List<AnswerDTO> answers=answerservice.getAnswersByQuestionId(question.getId());
+            question.setAnswers(answers);
+        }
+        return questiondtos;
     }
 
 
